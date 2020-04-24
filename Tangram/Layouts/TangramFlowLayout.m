@@ -728,7 +728,7 @@
         // 没有新请求，或超过500毫秒了
         // block里用到的currentNumber是copy的
         if (currentNumber == sself.numberOfReloadRequests
-            || 500 < now - sself.firstReloadRequestTS) {
+            || 1 < now - sself.firstReloadRequestTS) {
             sself.firstReloadRequestTS = 0;
             [sself calculateLayout];
             if (![sself.superview isKindOfClass:[TangramView class]] && [self.superview conformsToProtocol:@protocol(TangramLayoutProtocol)]) {
