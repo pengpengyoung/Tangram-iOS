@@ -23,6 +23,6 @@ Pod::Spec.new do |s|
   
   # s.dependency 'SDWebImage' 
   s.dependency 'LazyScroll', '1.0.1'
-  s.dependency 'VirtualView',:git => "https://github.com/pengpengyoung/VirtualView-iOS.git" 
+  # s.dependency 'VirtualView',:git => "https://github.com/pengpengyoung/VirtualView-iOS.git" 
   
 end
