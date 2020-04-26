@@ -467,18 +467,20 @@
     if (0 >= self.firstReloadRequestTS) {
         self.firstReloadRequestTS = [[NSDate date] timeIntervalSince1970];
     }
-    __weak typeof(self) wself = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __strong typeof(wself) sself = wself;
-        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        // 没有新请求，或超过500毫秒了
-        // block里用到的currentNumber是copy的
-        if (currentNumber == sself.numberOfReloadRequests
-            || 500 < now - sself.firstReloadRequestTS) {
-            sself.firstReloadRequestTS = 0;
-            [sself heightChanged];
-        }
-    });
+//    __weak typeof(self) wself = self;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        __strong typeof(wself) sself = wself;
+//        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+//        // 没有新请求，或超过500毫秒了
+//        // block里用到的currentNumber是copy的
+//        if (currentNumber == sself.numberOfReloadRequests
+//            || 500 < now - sself.firstReloadRequestTS) {
+//            sself.firstReloadRequestTS = 0;
+//            [sself heightChanged];
+//        }
+//    });
+    sself.firstReloadRequestTS = 0;
+    [sself heightChanged];
 }
 
 -(void)heightChanged
