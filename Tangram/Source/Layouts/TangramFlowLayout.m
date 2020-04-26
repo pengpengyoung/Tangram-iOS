@@ -684,27 +684,39 @@
     if (0 >= self.firstReloadRequestTS) {
         self.firstReloadRequestTS = [[NSDate date] timeIntervalSince1970];
     }
-    __weak typeof(self) wself = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __strong typeof(wself) sself = wself;
-        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-        // 没有新请求，或超过500毫秒了
-        // block里用到的currentNumber是copy的
-        if (currentNumber == sself.numberOfReloadRequests
-            || 500 < now - sself.firstReloadRequestTS) {
-            sself.firstReloadRequestTS = 0;
-            [sself calculateLayout];
-            if (![sself.superview isKindOfClass:[TangramView class]] && [self.superview conformsToProtocol:@protocol(TangramLayoutProtocol)]) {
-                //如果是subLayout要撑开，走额外的逻辑
-                //Model 暂时取不到，传空
-                [(UIView<TangramLayoutProtocol> *)(sself.superview) heightChangedWithElement:self model:nil];
-            }
-            if ([sself.tangramView isKindOfClass:[TangramView class]]) {
-                //NSLog(@"relayout invoke time in flowlayout ： %lf ",[[NSDate date] timeIntervalSince1970]);
-                [sself.tangramView reLayoutContent];
-            }
-        }
-    });
+//    __weak typeof(self) wself = self;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        __strong typeof(wself) sself = wself;
+//        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+//        // 没有新请求，或超过500毫秒了
+//        // block里用到的currentNumber是copy的
+//        if (currentNumber == sself.numberOfReloadRequests
+//            || 1 < now - sself.firstReloadRequestTS) {
+//            sself.firstReloadRequestTS = 0;
+//            [sself calculateLayout];
+//            if (![sself.superview isKindOfClass:[TangramView class]] && [self.superview conformsToProtocol:@protocol(TangramLayoutProtocol)]) {
+//                //如果是subLayout要撑开，走额外的逻辑
+//                //Model 暂时取不到，传空
+//                [(UIView<TangramLayoutProtocol> *)(sself.superview) heightChangedWithElement:self model:nil];
+//            }
+//            if ([sself.tangramView isKindOfClass:[TangramView class]]) {
+//                //NSLog(@"relayout invoke time in flowlayout ： %lf ",[[NSDate date] timeIntervalSince1970]);
+//                [sself.tangramView reLayoutContent];
+//            }
+//        }
+//    });
+    
+    sself.firstReloadRequestTS = 0;
+    [sself calculateLayout];
+    if (![sself.superview isKindOfClass:[TangramView class]] && [self.superview conformsToProtocol:@protocol(TangramLayoutProtocol)]) {
+        //如果是subLayout要撑开，走额外的逻辑
+        //Model 暂时取不到，传空
+        [(UIView<TangramLayoutProtocol> *)(sself.superview) heightChangedWithElement:self model:nil];
+    }
+    if ([sself.tangramView isKindOfClass:[TangramView class]]) {
+        //NSLog(@"relayout invoke time in flowlayout ： %lf ",[[NSDate date] timeIntervalSince1970]);
+        [sself.tangramView reLayoutContent];
+    }
 }
 
 -(NSString *)loadAPI
