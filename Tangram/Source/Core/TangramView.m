@@ -479,8 +479,8 @@
 //            [sself heightChanged];
 //        }
 //    });
-    sself.firstReloadRequestTS = 0;
-    [sself heightChanged];
+    self.firstReloadRequestTS = 0;
+    [self heightChanged];
 }
 
 -(void)heightChanged
