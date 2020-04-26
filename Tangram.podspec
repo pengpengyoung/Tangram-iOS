@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = '8.0'
   s.requires_arc = true
-  s.source       = { :git => "https://github.com/alibaba/Tangram-iOS.git", :tag => "2.1.5" }
+  s.source       = { :git => "https://github.com/pengpengyoung/Tangram-iOS.git", :tag => "2.1.5" }
   s.resources    = 'Tangram/Resources/*'
   s.source_files = 'Tangram/**/*.{h,m}'
   
